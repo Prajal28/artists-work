@@ -3,8 +3,8 @@
   <head>
  
 
- 
- 
+  
+  
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
@@ -40,7 +40,7 @@
         }
         if($(this).attr("value")=="noFilter"){
             $(".text").not(".noFilter").hide();
-           
+            
         }
     });
 });
@@ -95,7 +95,7 @@
               <input name="titleName" type="text" placeholder="Search Paintings" class="form-control">
             </div>
             <input type="submit" class="btn btn-primary" value="Search">
-           
+            
             <input type="hidden" name="search" value="title">
             <input type="hidden" name="descName" value="">
           </form>
@@ -105,7 +105,7 @@
     <div class="container">
       <div class="tempStyle">
       <h1>Search Results</h1>
-     
+      
       <div class="jumbotron">
 
 
@@ -125,12 +125,12 @@
                                   <input type="submit" class="btn btn-primary" value="Filter">
                                   </form>
 
-                
-     
-                                 
+                 
+      
+                                  
       </div>
       <!-- end of jumbotron -->
-                       
+                        
                         <?php
                         if (isset($_POST['titleName'])) {
                           $title_name = $_POST['titleName'];
@@ -139,7 +139,7 @@
                           $desc_name = mysql_real_escape_string($desc_name);
                           $search_text = $_POST['search'];
                         }
-                       
+                        
                         else{
                           $title_name = "xyz";
                           $desc_name = "ijk";
@@ -149,7 +149,7 @@
                           $servername = "localhost";
                           $username = "root";
                           $password = "";
-                         
+                          
 
           // Create connection
           $conn = mysql_connect($servername, $username, $password);
@@ -161,17 +161,17 @@
 
 
             if($search_text == 'title' ){
-            $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks WHERE Title LIKE '%{$title_name}%';
+            $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks WHERE Title LIKE '%{$title_name}%' ORDER BY ArtistID, ArtWorkID";
             }
             elseif ($search_text == 'desc'){
-             $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks WHERE Description LIKE '%{$desc_name}%' ;
-          }
+             $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks WHERE Description LIKE '%{$desc_name}%' ORDER BY ArtistID, ArtWorkID";
+          } 
           else {
-            $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks ;
+            $sql = "SELECT ImageFileName, Title, Description, ArtWorkID, ArtistID FROM artworks ORDER BY ArtistID, ArtWorkID";
           }
-         
+          
 
-         
+          
           $result = mysql_query($sql);
 
           if (! $result) {
@@ -179,7 +179,7 @@
           }
                        // output data of each row
             while($row = mysql_fetch_assoc($result)) {
-                $new_name = "<mark>".$desc_name."</mark>"; 
+                $new_name = "<mark>".$desc_name."</mark>";  
               $highwords = $row['Description'];
               $highwords = str_replace($desc_name,$new_name,$highwords);
 
@@ -195,8 +195,8 @@
                         </a>
                         <p>".$highwords."</p>
                       </div>
-                       </div>
-                     
+                       </div> 
+                      
 
 
                         ";
@@ -210,5 +210,4 @@
     </div>
     </div>
   </body>
-</html>​
-
+</html>
